@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% comment %} banner section {% endcomment %}
+  <section class="banner py-5 my-3 border">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="col-12 col-lg-7 d-block mx-auto">
+        <img class="img-fluid" src="{% static 'images/banner/banner-img.webp' %}" alt="banner-img" />
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <h3 class="fw-bold" style="width: 100%; max-width: 450px;">Riderover You Favorite Car Destination</h3>
+        <p style="width: 100%; max-width: 400px;">
+          <span class="fw-bold">Welcome</span> to Riderover, where your dream ride awaits! Discover an unmatched selection of quality vehicles, expertly curated to meet all your driving needs.
+        </p>
+        <button class="btn btn-warning text-capitalize">Order now</button>
+      </div>
+    </div>
+  </section>
+  <h1 class="text-center text-uppercase">car list</h1>
+  {% comment %} car-list section {% endcomment %}
+  <section class="car-list py-3 my-3 border">
+    <h6 class="text-center">{{ cars|length }} results found</h6>
+    <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+      {% for car in cars %}
+        <div class="card" style="width: 18rem;">
+          <img src="{{ car.car_img.url }}" class="card-img-top" alt="{{ car.car_title }}" />
+          <div class="card-body">
+            <h6 class="card-title">{{ car.car_title }}</h6>
+            <p class="card-text">{{ car.car_description | truncatewords:8 }}</p>
+            <p class="card-text">${{ car.car_price }}</p>
+            <p class="card-text">{{ car.brands }}</p>
+            <a href="{% url 'car_detail' car.id %}" class="btn btn-warning w-100">Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

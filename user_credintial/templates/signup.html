@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center flex-column" style="min-height: 90vh;">
+  
+  {% if messages %}
+    {% for msg in messages %}
+      <h6 {% if msg.tags %} class="text-center" {% endif %}>{{ msg|safe }}</h6>
+    {% endfor %}
+  {% endif %}
+
+    <div class="border mt-3 p-3 shadow-lg rounded" style="width: 100%; max-width: 400px;">
+      <h4 class="text-center py-3">{{ type }}</h4>
+      <form method="post" class="px-1 py-3" style="max-width: 100%;">
+        {% csrf_token %}
+        <!-- {{form|crispy}} -->
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-warning w-100">Sign up</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

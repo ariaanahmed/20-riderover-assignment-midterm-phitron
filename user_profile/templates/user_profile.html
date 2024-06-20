@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h5 class="text-center text-uppercase pt-3">Purchased Cars</h5>
+  <ul>
+    <a class="btn btn-warning w-100" href="{% url 'change_profile'%}">Edit Profile</a>
+    {% for car in user_purchases %}
+      <section class="car-details mt-3">
+        <div class="card w-100">
+          <div class="row g-0">
+            <div class="col-md-4 d-block mx-auto p-3">
+              <img src="{{ car.car_img.url }}" class="img-fluid rounded-start d-block mx-auto" alt="{{ car.car_title }}" />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Title: {{ car.car_title }}</h5>
+                <p class="card-text">Price: ${{ car.car_price }}</p>
+                <p class="card-text">
+                  <span class="fw-bold">Description:</span> {{ car.car_description }}
+                </p>
+                <p class="card-text">Brand: {{ car.brands }}</p>
+                {% if user.is_authenticated %}
+                  <form method="post" action="{% url 'delete_user_purchased' car.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning w-100 mt-4">Remove</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% empty %}
+      <p>You have not purchased any cars yet.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}
